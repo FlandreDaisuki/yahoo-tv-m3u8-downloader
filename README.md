@@ -1,10 +1,12 @@
 # Yahoo TV m3u8 下載
 
 - [Yahoo TV m3u8 下載](#yahoo-tv-m3u8-下載)
-  - [起因](#起因)
-  - [安裝](#安裝)
-  - [使用](#使用)
-  - [授權與聲明](#授權與聲明)
+    - [起因](#起因)
+    - [安裝](#安裝)
+        - [一般使用者](#一般使用者)
+        - [開發者](#開發者)
+    - [使用](#使用)
+    - [授權與聲明](#授權與聲明)
 
 ## 起因
 
@@ -14,13 +16,13 @@
 
 ### 一般使用者
 
-到本專案 release 頁面下載最新的 xpi 檔案，拉到火狐即可。
+到本專案 [Releases](https://github.com/FlandreDaisuki/yahoo-tv-m3u8-downloader/releases) 頁面下載最新的 xpi 檔案，拉到火狐即可。
 
 ### 開發者
 
 1. clone 本專案
 2. 打開 `about:addons` 右上角的齒輪選 **從檔案安裝附加元件**
-3. 選本專案的 `manifest.json`
+3. 選本專案的 `src/manifest.json`
 4. 若需要除錯可從 `about:debugging#addons` 開啟主控台
 
 若想打包成 xpi 可用 `web-ext` 打包
@@ -32,7 +34,7 @@ $ web-ext sign -c web-ext.config.js --api-key $你的API帳號 --api-secret $你
 ## 使用
 
 1. 到可播放動畫的頁面 (e.g. [登山少女第三季 EP1](https://tw.tv.yahoo.com/encouragement-of-climb_s3/%E5%89%8D%E9%80%B2%E5%90%A7-%E7%99%BB%E5%B1%B1%E5%B0%91%E5%A5%B3-%E7%AC%AC%E4%B8%89%E5%AD%A3ep01-%E5%AE%8C%E6%95%B4%E7%89%88-023000765.html))
-2. 網址列會出現一個 ![Y icon](icons/Y16.png)
+2. 網址列會出現一個 ![Y icon](src/icons/Y16.png)
     - 若要下載高畫質請手動切換後再點
 3. 點下去就可以下載了
 
