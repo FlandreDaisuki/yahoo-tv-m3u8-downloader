@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "Yahoo TV m3u8 downloader",
+  "description": "Yahoo TV m3u8 下載",
+  "version": "0.1",
+  "applications": {
+    "gecko": {
+      "id": "yahoo-tv-m3u8-downloader@flandre.tw",
+      "strict_min_version": "42.0"
+    }
+  },
+  "icons": {
+    "16": "icons/Y16.png",
+    "32": "icons/Y32.png"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://tw.tv.yahoo.com/*"
+      ],
+      "js": [
+        "content_scripts/FileSaver.min.js",
+        "content_scripts/index.js"
+      ]
+    }
+  ],
+  "page_action": {
+    "browser_style": true,
+    "default_icon": {
+      "16": "icons/Y16.png",
+      "32": "icons/Y32.png"
+    }
+  },
+  "permissions": [
+    "https://tw.tv.yahoo.com/*",
+    "https://*.cdn.yimg.com/*",
+    "webRequest",
+    "webRequestBlocking"
+  ]
+}
