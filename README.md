@@ -21,11 +21,11 @@
 ### 開發者
 
 1. clone 本專案
-2. 打開 `about:addons` 右上角的齒輪選 **從檔案安裝附加元件**
+2. 打開火狐進入 **about:debugging** ，選<kbd>載入暫用附加元件</kbd>
 3. 選本專案的 `src/manifest.json`
-4. 若需要除錯可從 `about:debugging#addons` 開啟主控台
+4. 若需要除錯可勾選 **啟用附加元件除錯**，並點選本附加元件的<kbd>除錯</kbd>打開控制台
 
-若想打包成 xpi 可用 `web-ext` 打包
+若想打包成 xpi 可用 [web-ext](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Getting_started_with_web-ext) 打包
 
 ```sh
 $ web-ext sign -c web-ext.config.js --api-key $你的API帳號 --api-secret $你的API密鑰
