@@ -1,8 +1,25 @@
+const RES_ENUM = {
+  // 1080p
+  _31: 0x00,
+  _11: 0x01,
+  _10: 0x02,
+
+  // 540p
+  _35: 0x10,
+  _9: 0x11,
+
+  // 360p
+  _36: 0x20,
+  _34: 0x21,
+  _8: 0x22,
+  _7: 0x23,
+};
+
 const database = {};
 /* {
   [tabId: Number]: {
     name: String,
-    text: String
+    res: m3u8String[]
   },
 }
 */
@@ -21,56 +38,62 @@ function headersReceivedListener(details) {
   if (hMap.get('Content-Type') === 'application/vnd.apple.mpegurl') {
     console.debug('bg::details', details);
 
-    browser.pageAction.hide(tabId);
-    resetDatabase(tabId);
+    const { pathname } = new URL(details.url);
+    const resCode = pathname.replace(/.*(_\d+)\.m3u8$/, '$1');
+    console.debug('bg::resCode', resCode);
 
     const filter = browser.webRequest.filterResponseData(requestId);
     const decoder = new TextDecoder('utf-8');
-    const encoder = new TextEncoder();
+    let m3u8 = '';
 
     // Step (2-1), copy m3u8 to database
     filter.ondata = (event) => {
-      const m3u8 = decoder.decode(event.data, { stream: true });
-      console.debug('bg::m3u8', m3u8);
-      insertDatabase(tabId, 'text', m3u8);
-      filter.write(encoder.encode(m3u8));
-      filter.disconnect();
+      m3u8 += decoder.decode(event.data, { stream: true });
+      filter.write(event.data);
     };
 
-    // Step (2-2), ask name from content_scripts
-    browser.tabs.sendMessage(tabId, { q: 'name' });
+    filter.onstop = () => {
+      filter.disconnect();
+
+      console.debug('bg::m3u8', m3u8);
+
+      browser.pageAction.hide(tabId).then(() => {
+        // Step (2-2), ask name from content_scripts
+        browser.tabs.sendMessage(tabId, { q: 'name', m3u8, resCode });
+      });
+    };
   }
 }
 
 // Step (3), answer name from content_scripts
-browser.runtime.onMessage.addListener((request, sender) => {
+browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.debug('bg::onMessage', request, sender);
 
   if (request.q === 'name') {
     const tabId = sender.tab.id;
-    insertDatabase(tabId, 'name', request.name);
+    const db = getTabDatabase(tabId);
+    if (db.name !== request.name) {
+      db.name = request.name;
+      db.res = [];
+    }
+    db.res[RES_ENUM[request.resCode]] = request.m3u8;
     // m3u8 done
     browser.pageAction.show(tabId);
+  } else if (request.q === 'tabDatabase') {
+    // Step (4), wait until user click the icon
+    sendResponse(getTabDatabase(request.tabId));
   }
 });
 
-// Step (4), wait until user click the icon
-browser.pageAction.onClicked.addListener((tab) => {
-  const tabId = tab.id;
-  console.debug('bg::pageAction.onClicked -> tab', tab);
-  browser.tabs.sendMessage(tabId, { q: 'download', body: database[tabId] });
-});
-
-
-function resetDatabase(id) {
-  database[id] = {};
-}
-
-function insertDatabase(id, key, value) {
+function getTabDatabase(id) {
   if (!database[id]) {
-    resetDatabase(id);
+    database[id] = {
+      name: null,
+      res: [],
+    };
   }
-  database[id][key] = value;
+
+  return database[id];
 }
 
 function headersToMap(h) {
