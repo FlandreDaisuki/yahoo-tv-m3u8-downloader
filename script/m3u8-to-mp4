@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+IFS='
+'
+for fullname in `ls *.m3u8`; do
+  filename=$(basename "$fullname")
+  name="${filename%.*}"
+  ffmpeg -i "$filename" -c copy -bsf:a aac_adtstoasc "${name}.mp4"
+done
