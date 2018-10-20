@@ -45,6 +45,8 @@ $ web-ext sign -c web-ext.config.js --api-key $你的API帳號 --api-secret $你
 
 本專案為學術交流用途，所有影片所有權及播放權由原網站所屬。
 
+本附加元件使用的 [TSDemuxer.js](src/background/TSDemuxer.js) 是由 [video-dev/hls.js](https://github.com/video-dev/hls.js) (Apache 2 License) 修改，感謝 hls.js
+
 The MIT License (MIT)
 
 Copyright (c) 2018 FlandreDaisuki\<vbnm123c@gmail.com>
