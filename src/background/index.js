@@ -29,12 +29,6 @@ function headersReceivedPlaylistListener(details) {
     const resCode = pathname.replace(/.*(_\d+)\.m3u8$/, '$1');
     // console.debug('bg::m3u8::resCode', resCode);
 
-    const db = getTabDatabase(tabId);
-    const resData = db.res.get(resCode);
-    if (resData && resData.m3u8) {
-      return;
-    }
-
     const filter = browser.webRequest.filterResponseData(requestId);
     const decoder = new TextDecoder('utf-8');
     let m3u8 = '';
@@ -66,6 +60,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     const tabId = sender.tab.id;
     const db = getTabDatabase(tabId);
     if (db.name !== request.name) {
+      // console.debug('bg::name changed', db.name, request.name);
       db.name = request.name;
       db.res = new Map();
     }

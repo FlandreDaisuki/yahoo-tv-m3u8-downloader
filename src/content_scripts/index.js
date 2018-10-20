@@ -8,7 +8,7 @@ browser.runtime.onMessage.addListener((request) => {
     if (nameEl) {
       ans.name = nameEl.textContent;
     }
-
+    // console.debug('content::ans', ans);
     browser.runtime.sendMessage(ans);
     break;
   }

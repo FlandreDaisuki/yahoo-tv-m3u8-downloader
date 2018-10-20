@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Yahoo TV m3u8 downloader",
   "description": "Yahoo TV m3u8 下載",
-  "version": "0.4",
+  "version": "0.5",
   "applications": {
     "gecko": {
       "id": "yahoo-tv-m3u8-downloader@flandre.tw",
