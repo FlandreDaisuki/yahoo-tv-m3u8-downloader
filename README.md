@@ -23,7 +23,7 @@
 1. clone 本專案
 2. 打開火狐進入 **about:debugging** ，選<kbd>載入暫用附加元件</kbd>
 3. 選本專案的 `src/manifest.json`
-4. 若需要除錯可勾選 **啟用附加元件除錯**，並點選本附加元件的<kbd>除錯</kbd>打開控制台
+4. 若需要除錯可勾選 **啟用附加元件除錯**，並點選本附加元件的<kbd>除錯</kbd>打開控制台(~~記得手動把 console.debug 打開~~)
 
 若想打包成 xpi 可用 [web-ext](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Getting_started_with_web-ext) 打包
 

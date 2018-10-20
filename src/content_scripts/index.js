@@ -1,5 +1,5 @@
 browser.runtime.onMessage.addListener((request) => {
-  console.debug('content::request', request);
+  // console.debug('content::request', request);
 
   switch (request.q) {
   case 'name': {
@@ -8,6 +8,7 @@ browser.runtime.onMessage.addListener((request) => {
     if (nameEl) {
       ans.name = nameEl.textContent;
     }
+
     browser.runtime.sendMessage(ans);
     break;
   }
