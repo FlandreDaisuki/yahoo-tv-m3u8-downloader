@@ -12,6 +12,20 @@
 
 受不了[動畫瘋的編碼](https://www.ptt.cc/bbs/C_Chat/M.1538547978.A.AE6.html)了... 主要是拿來看動畫。
 
+我有做一個比較的[網頁](https://flandredaisuki.github.io/yahoo-tv-m3u8-downloader/)，使用了禁書目錄的OP，你可以試著猜猜看哪一個是動畫瘋的。
+
+<details close>
+  <summary>為什麼會這樣？</summary>
+
+  看不太出來對吧，事實上這個 OP 根本不適合 x264 壓縮，閃來閃去的這種場景是最不適合現代視訊壓縮技術的。
+  在 OP 這個片段，連位元率 (bitrate) 都差不多，檔案大小也是。(見比較網頁的**答案**)
+
+  但在原始影片時卻差到一倍，因為其他場景像是人物對話時只有嘴巴會動眼睛會眨，大部分的畫面是靜止的，位元率不需要太高，這是最適合視訊壓縮的場景。
+  這裡有一篇簡單介紹位元率控制 (rate control) 的[文章](https://slhck.info/video/2017/03/01/rate-control.html)，內容提到 ABR, CBR, 1pass, 2pass, CRF 的比較。
+
+  Yahoo 是使用 2pass 而動畫瘋使用 ABR。(見比較網頁的**原始檔案比較**，<kbd>ctrl</kbd>+<kbd>f</kbd> 找 `rc=`)
+</details>
+
 ## 安裝
 
 ### 一般使用者
